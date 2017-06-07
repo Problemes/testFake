@@ -1,5 +1,7 @@
 package com.framework.core;
 
+import com.framework.ReflectUtil.TestInvocationHandler;
+import com.framework.entity.Father;
 import com.framework.entity.Model;
 import org.junit.Assert;
 import org.junit.Before;
@@ -152,6 +154,12 @@ public class BaseTest {
         ClassLoader classLoader = Model.class.getClassLoader();
 
         System.out.println(classLoader.getClass().getName());
+
+        TestInvocationHandler testInvocationHandler = new TestInvocationHandler();
+        Serializable father = (Serializable) testInvocationHandler.bind(new Model());
+
+        //father.run();
+
 
     }
 

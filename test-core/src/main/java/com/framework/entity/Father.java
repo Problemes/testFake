@@ -32,4 +32,8 @@ public class Father {
     private String Fvar2;
     public  String FvarPub;
 
+    public void run(){
+        System.out.println("Father Run-----------");
+    }
+
 }
