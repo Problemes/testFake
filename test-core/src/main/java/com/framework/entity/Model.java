@@ -29,7 +29,7 @@ public class Model extends Father implements Serializable {
     public void run(){
         System.out.println("Exec------> run");
     }
-    public void run(int a){
+    public void run(Integer a){
         System.out.println("Exec------> run + " + a);
     }
 }

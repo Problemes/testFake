@@ -6,9 +6,16 @@ import com.framework.entity.Model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Properties;
 
 /**
  * Created by HR on 2017/6/7.
@@ -149,18 +156,99 @@ public class BaseTest {
      *
      */
     @Test
-    public void testReflectProxy() throws IllegalAccessException, InstantiationException {
+    public void testReflectProxy() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         //类加载器
         ClassLoader classLoader = Model.class.getClassLoader();
 
         System.out.println(classLoader.getClass().getName());
 
+        /** //用interface生成代理 */
         TestInvocationHandler testInvocationHandler = new TestInvocationHandler();
         Serializable father = (Serializable) testInvocationHandler.bind(new Model());
 
         //father.run();
 
 
+        /** //用反射往Integer的list中插入String */
+        List<Integer> list = new ArrayList<Integer>();
+        /* getMethod(..) 第一个参数是方法名，第二个参数是参数类型的可变数组 */
+        Method listAddMth = list.getClass().getMethod("add",Object.class);
+        /* invoke(..) 第一个参数是要执行方法的对象，第二个参数是需要的参数可变数组 */
+        listAddMth.invoke(list,"javaReflect");
+        listAddMth.invoke(list,"javaSDK");
+        System.out.println(list.get(1));
+
+        Method modelMth = Model.class.getMethod("run",Integer.class);
+        modelMth.invoke(new Model(),123);
     }
 
+    /**
+     * 对于普通的工厂模式当我们在添加一个子类的时候，就需要对应的修改工厂类。 当我们添加很多的子类的时候，会很麻烦。
+     * Java 工厂模式可以参考
+     * http://baike.xsoftlab.net/view/java-factory-pattern
+     *
+     * 现在我们利用反射机制实现工厂模式，可以在不修改工厂类的情况下添加任意多个子类。
+     *
+     * 但是有一点仍然很麻烦，就是需要知道完整的包名和类名，这里可以使用properties配置文件来完成。
+     *
+     * java 读取 properties 配置文件 的方法可以参考
+     * http://baike.xsoftlab.net/view/java-read-the-properties-configuration-file
+     */
+
+    interface Fruit {
+        void eat();
+    }
+    class Apple implements Fruit {
+        public void eat() {
+            System.out.println("Apple");
+        }
+    }
+    class Orange implements Fruit {
+        public void eat() {
+            System.out.println("Orange");
+        }
+    }
+
+    class Factory {
+        public Fruit getInstance(String className){
+            Fruit f = null;
+
+            try {
+                f = (Fruit) Class.forName(className).newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return f;
+        }
+    }
+
+    @Test
+    public void testFactory(){
+
+        /** 此工厂方式不能生产内部类 会报错 ClassNotFoundException */
+        Factory factory = new Factory();
+        Fruit fruit = factory.getInstance("com.framework.core.BaseTest.Apple");
+        fruit.eat();
+        fruit = factory.getInstance("com.framework.core.BaseTest.Orange");
+        fruit.eat();
+    }
+
+    /**
+     * 测试获取配置文件
+     */
+    @Test
+    public void testProperties() throws IOException {
+        Properties p = new Properties();
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("application.properties");
+
+        p.load(is);
+
+        System.out.println(p.getProperty("java"));
+
+    }
 }
