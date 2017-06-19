@@ -1,7 +1,6 @@
 package com.framework.core;
 
 import com.framework.entity.MyPutRet;
-import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -9,7 +8,6 @@ import com.qiniu.processing.OperationManager;
 import com.qiniu.processing.OperationStatus;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import com.qiniu.util.StringUtils;
@@ -17,7 +15,7 @@ import com.qiniu.util.UrlSafeBase64;
 import net.sf.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
+
 
 /**
  * Created by HR on 2017/6/12.
@@ -131,13 +129,13 @@ public class QNTest {
 //        String bucket = "test-pic";
 
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
-        String localFilePath = "C:\\Users\\HR\\Desktop\\testServerObjectStore_Limitwh.jpg";
+        String localFilePath = "C:\\Users\\HR\\Desktop\\testServerUpload.jpg";
         //如果是Linux，格式是
         //String localFilePath = "/home/qiniu/test.png";
 
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         //String key = "testServerUpload.jpg";
-        String key = "testServerObjectStore_Limitwh";
+        String key = "testServerUpload.jpg";
 //        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
 //        String upToken = auth.uploadToken(bucket);
 
@@ -208,5 +206,19 @@ public class QNTest {
         }
     }
 
+    //生成私有下载token
+    @Test
+    public void testPriDownLoadToken(){
+
+        long timeStamp = 3600;
+        String DownloadUrl = "http://78re52.com1.z0.glb.clouddn.com/resource/flower.jpg";
+
+        String sign = auth.privateDownloadUrl(DownloadUrl,timeStamp);
+
+        //move/bmV3ZG9jczpmaW5kX21hbi50eHQ=/bmV3ZG9jczpmaW5kLm1hbi50eHQ=\n
+        System.out.println(auth.privateDownloadUrl("/move/bmV3ZG9jczpmaW5kX21hbi50eHQ=/bmV3ZG9jczpmaW5kLm1hbi50eHQ=\\n"));
+
+        System.out.println(sign);
+    }
 
 }
