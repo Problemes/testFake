@@ -317,8 +317,10 @@ public class RedisTest {
     public void testPersistentMQ() throws InterruptedException {
 
         PPubClient pubClient = new PPubClient("192.168.1.118",6379);
+
         final String channel = "pubsub-channel-p";
         final PSubClient subClient = new PSubClient("192.168.1.118",6379,"subClient-1");
+
         Thread subThread = new Thread(new Runnable() {
 
             @Override
@@ -330,8 +332,12 @@ public class RedisTest {
 
             }
         });
+
+        //设置成后台线程，如果前台线程死光了，那后台线程自动死掉
         subThread.setDaemon(true);
         subThread.start();
+
+
         int i = 0;
         while(i < 2){
             String message = RandomStringUtils.random(6, true, true);//apache-commons
@@ -339,6 +345,7 @@ public class RedisTest {
             i++;
             Thread.sleep(1000);
         }
+
         subClient.unsubscribe(channel);
     }
 
