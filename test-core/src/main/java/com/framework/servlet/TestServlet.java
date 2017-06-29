@@ -1,6 +1,6 @@
 package com.framework.servlet;
 
-import com.framework.Util.TestThread;
+import com.framework.Util.NewThread;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class TestServlet extends HttpServlet {
 
-    private TestThread testThread;
+    private NewThread testThread;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +33,7 @@ public class TestServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         if (testThread == null) {
-            testThread = new TestThread();
+            testThread = new NewThread();
             testThread.start(); // servlet 上下文初始化时启动 socket
         }
     }

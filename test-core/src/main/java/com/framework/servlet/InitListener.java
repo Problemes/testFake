@@ -1,6 +1,6 @@
 package com.framework.servlet;
 
-import com.framework.Util.TestThread;
+import com.framework.Util.NewThread;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,12 +12,12 @@ public class InitListener implements ServletContextListener {
 
 
 
-    private TestThread testThread;
+    private NewThread testThread;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-        testThread = new TestThread();
+        testThread = new NewThread();
         testThread.start();
 
     }

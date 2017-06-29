@@ -4,7 +4,7 @@ package com.framework.Util;
 /**
  * Created by HR on 2017/6/28.
  */
-public class TestThread extends Thread {
+public class NewThread extends Thread {
 
     @Override
     public void run() {
