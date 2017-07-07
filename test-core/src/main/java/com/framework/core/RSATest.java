@@ -28,7 +28,7 @@ public class RSATest {
     @Before
     public void initKeys() throws NoSuchAlgorithmException {
         keyMap = RSAUtil.initKey();
-        str = "test_data";
+        str = "username:password";
 
 //        publicKey = RSAUtil.getPublicKey(keyMap);
 //        privateKey = RSAUtil.getPrivateKey(keyMap);
@@ -78,7 +78,6 @@ public class RSATest {
         byte[] deBytes = RSAUtil.decryptByPublicKey(enBytes,publicKey);
 
         System.out.println("公钥解密：" + new String(deBytes));
-
     }
 
     @Test
@@ -87,7 +86,7 @@ public class RSATest {
         System.out.println("---------------私钥签名过程------------------");
         String sign = RSAUtil.sign(str.getBytes(),privateKey);
         //私钥加密数据
-        byte[] enBytes = RSAUtil.encryptByPrivateKey(str.getBytes(),privateKey);
+        //byte[] enBytes = RSAUtil.encryptByPrivateKey(str.getBytes(),privateKey);
 
         System.out.println("私钥签名：" + sign);
 

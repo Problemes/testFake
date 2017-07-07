@@ -33,6 +33,7 @@ public class MD5Util {
 
     /**
      * MD5 32位加密返回string
+     * 参数是 MD5Origin 加密后的字节数组
      * @return
      */
     public static String MD532(byte[] b){
