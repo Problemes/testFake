@@ -39,6 +39,17 @@ public class ArrayListTest {
         for (String i : arrayString){
             System.out.println(i);
         }
+    }
 
+    @Test
+    public void testArrayWithSpit(){
+        String var = "100:200:300:400:500";
+        String[] vars = var.split(":");
+        StringBuffer sb = new StringBuffer(vars[0]);
+        for (int i = 0; i < vars.length; i++){
+            System.out.println(vars[i]);
+            sb.append(vars[i]);
+        }
+        System.out.println(sb.toString());
     }
 }

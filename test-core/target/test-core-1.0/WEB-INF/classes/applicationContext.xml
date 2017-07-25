@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 加载数据库连接的资源文件 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+
+    <!-- 配置数据源 数据库连接池alibaba Druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <!-- 数据库基本信息配置 -->
+        <property name = "url" value = "${jdbc.url}" />
+        <property name = "username" value = "${jdbc.username}" />
+        <property name = "password" value = "${jdbc.password}" />
+        <property name = "driverClassName" value = "${jdbc.driver}" />
+        <property name = "filters" value = "${filters}" />
+
+        <!-- 最大并发连接数 -->
+        <property name = "maxActive" value = "${maxActive}" />
+
+        <!-- 初始化连接数量 -->
+        <property name = "initialSize" value = "${initialSize}" />
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name = "maxWait" value = "${maxWait}" />
+
+        <!-- 最小空闲连接数 -->
+        <property name = "minIdle" value = "${minIdle}" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name = "timeBetweenEvictionRunsMillis" value ="${timeBetweenEvictionRunsMillis}" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name = "minEvictableIdleTimeMillis" value ="${minEvictableIdleTimeMillis}" />
+
+        <property name = "validationQuery" value = "${validationQuery}" />
+        <property name = "testWhileIdle" value = "${testWhileIdle}" />
+        <property name = "testOnBorrow" value = "${testOnBorrow}" />
+        <property name = "testOnReturn" value = "${testOnReturn}" />
+        <property name = "maxOpenPreparedStatements" value ="${maxOpenPreparedStatements}" />
+
+        <!-- 打开 removeAbandoned 功能 -->
+        <property name = "removeAbandoned" value = "${removeAbandoned}" />
+
+        <!-- 1800 秒，也就是 30 分钟 -->
+        <property name = "removeAbandonedTimeout" value ="${removeAbandonedTimeout}" />
+
+        <!-- 关闭 abanded 连接时输出错误日志 -->
+        <property name = "logAbandoned" value = "${logAbandoned}" />
+    </bean>
+
+
+    <!-- 整合mybatis 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 加载mybatis的全局配置文件 -->
+        <!--<property name="configLocation" value="classpath:sqlMapConfig.xml"/>-->
+        <property name="mapperLocations" >
+            <list>
+                <!--<value>classpath*:com/hr/fruit/**/*.xml</value>-->
+                <value>classpath*:mapper/*.xml</value>
+                <!--<value>classpath*:mapper/*.xml</value>-->
+            </list>
+        </property>
+        <property name="configurationProperties">
+            <props>
+                <!-- mapUnderscoreToCamelCase属性将表中列名的下划线映射为JavaBean属性的驼峰式命名，默认为false -->
+                <prop key="mapUnderscoreToCamelCase">true</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <!-- 配置mapper扫描器-->
+    <!-- 批量加载mapper，指定mapper所在包名，mybatis自动扫描并加载所有mapper接口。规范：mapper接口类名和mapper.xml
+         映射文件名保持一致并在一个目录下？？？ ，前提是使用mapper代理方法-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 扫描的包路径如果是多个，用逗号隔开-->
+        <property name="basePackage" value="com.framework.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 使用sqlSessionTemplate代替生成sqlSession线程安全，多个web线程调同一个dao，他们使用同一个sqlSessionTemplate，也就是同一个SqlSession -->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+
+
+</beans>
