@@ -21,4 +21,24 @@ public class ArrayListTest {
             System.out.println(father);
         }
     }
+
+    /**
+     * 当数组参数为空时，初始化为其给各个数据类型的默认值
+     */
+    @Test
+    public void testArrayParamNull(){
+        int[] array = new int[3];
+        for (int i : array){
+            System.out.println(i);
+        }
+        Long[] arrayLong = new Long[3];
+        for (Long i : arrayLong){
+            System.out.println(i);
+        }
+        String[] arrayString = new String[3];
+        for (String i : arrayString){
+            System.out.println(i);
+        }
+
+    }
 }

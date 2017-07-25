@@ -169,7 +169,7 @@
 
         <resources>
             <resource>
-                <directory>../configs/${buildEnv}/task-quartz</directory>
+                <directory>../configs/${buildEnv}/test-core</directory>
             </resource>
             <resource>
                 <directory>./src/main/resources</directory>
@@ -178,13 +178,13 @@
 
         <plugins>
             <!-- 打成war包-->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <warName>test-core</warName>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <!-- 中文编码 -->
             <plugin>
