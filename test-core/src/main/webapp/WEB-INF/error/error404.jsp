@@ -11,6 +11,6 @@
     <title>404</title>
 </head>
 <body>
-    <h4> 500 Error</h4>
+    <h4> 404 Error</h4>
 </body>
 </html>
