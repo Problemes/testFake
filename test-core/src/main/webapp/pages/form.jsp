@@ -20,6 +20,11 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+    <style>
+        /*body{ padding:50px 0 0 50px;}*/
+        .datainp{ width:200px; height:30px; border:1px #ccc solid;}
+        .datep{ margin-bottom:40px;}
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -469,14 +474,11 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="orderTime" class="materialize-textarea" name="orderTime" />
-                                        <label for="orderTime">Time</label>
-                                    </div>
-                                    <div style="width:100%;height:100px;">
-                                        <p class="datep"><input class="datainp" id="indate" type="text" placeholder="只显示年月" value=""  readonly></p>
-                                        <p class="datep"><input class="datainp" id="dateinfo" type="text" placeholder="请选择"  readonly></p>
-                                        <p class="datep"><input class="datainp" id="datebut" type="text" placeholder="请选择"  readonly><input type="button" onClick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})" value="打开"></p>
+                                        <label for="orderTime">Time</label><br/>
                                     </div>
                                 </div>
+                                <p class="datep"><input class="datainp" id="dateinfo" type="text" placeholder="请选择"  readonly></p>
+
                             </form>
 
                             <!-- Switch -->
@@ -596,17 +598,17 @@
 <!-- Custom Js -->
 <script src="assets/js/custom-scripts.js"></script>
 
-<script type="text/javascript" src="jeDate/jedate.js"></script>
+<script type="text/javascript" src="../js/jedate.js"></script>
 
 <script type="text/javascript">
     //jeDate.skin('gray');
-    jeDate({
-        dateCell:"#indate",//isinitVal:true,
-        format:"YYYY-MM",
-        isTime:false, //isClear:false,
-        minDate:"2015-10-19 00:00:00",
-        maxDate:"2016-11-8 00:00:00"
-    })
+//    jeDate({
+//        dateCell:"#indate",//isinitVal:true,
+//        format:"YYYY-MM",
+//        isTime:false, //isClear:false,
+//        minDate:"2015-10-19 00:00:00",
+//        maxDate:"2016-11-8 00:00:00"
+//    })
     jeDate({
         dateCell:"#dateinfo",
         format:"YYYY-MM-DD hh:mm:ss",
