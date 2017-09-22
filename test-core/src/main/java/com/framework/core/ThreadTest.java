@@ -1,6 +1,5 @@
 package com.framework.core;
 
-import okhttp3.Call;
 import org.junit.Test;
 
 import java.util.concurrent.*;
