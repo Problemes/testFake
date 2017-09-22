@@ -1,21 +1,14 @@
 package com.framework.core;
 
 import com.framework.ReflectUtil.TestInvocationHandler;
-import com.framework.entity.Father;
 import com.framework.entity.Model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Properties;
 
 /**
  * Created by HR on 2017/6/7.
@@ -238,17 +231,4 @@ public class BaseTest {
         fruit.eat();
     }
 
-    /**
-     * 测试获取配置文件
-     */
-    @Test
-    public void testProperties() throws IOException {
-        Properties p = new Properties();
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("application.properties");
-
-        p.load(is);
-
-        System.out.println(p.getProperty("java"));
-
-    }
 }
