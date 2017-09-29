@@ -49,7 +49,8 @@ public class PropertiesTest {
 
         System.out.println(p.getProperty("java"));
 
-        this.getProperties("D:\\github\\testFake\\test-core\\src\\main\\resources\\application.properties");
+        Properties thisPp = this.getProperties("D:\\github\\testFake\\test-core\\src\\main\\resources\\application.properties");
+        System.out.println("this.Properties : " + thisPp.getProperty("java"));
 
         /** 读取系统的properties文件 */
         Properties sp = System.getProperties();
