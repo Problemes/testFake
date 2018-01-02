@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 /**
  * 正则表达式示例
  * https://www.cnblogs.com/lzq198754/p/5780340.html
+ * 理论：https://www.cnblogs.com/zery/p/3438845.html
+ * 常用的20个正则表达式示例：https://www.jianshu.com/p/e7bb97218946
  * Created by HR on 2017/12/7.
  */
 public class regexTest {
@@ -53,4 +55,17 @@ public class regexTest {
         System.out.println("验证结果：--->>" + rs);
 
     }
+
+    @Test
+    public void testValidateDate(){
+        String regEx = "^(\\d{1,4})(-|\\/)(\\d{1,2})\\2(\\d{1,2})$";
+
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher("1992-02-10");
+
+        boolean result = matcher.matches();
+
+        System.out.println(result);
+    }
+
 }
