@@ -1,12 +1,16 @@
 package com.framework.core;
 
 import com.framework.entity.Father;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.collections.map.HashedMap;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by HR on 2017/7/11.
@@ -114,6 +118,31 @@ public class ArrayListTest {
 
         Arrays.asList(arg0);
         new ArrayList<String>(Arrays.asList(arg1));//可操作
+
+    }
+
+    @Test
+    public void testJsonArrayToMap(){
+        
+        String jsonStr = "[{\"firstName\": \"Isaac\", \"lastName\": \"Asimov\", \"genre\": \"science fiction\" },{ \"firstName\": \"Tad\", \"lastName\": \"Williams\", \"genre\": \"fantasy\" },{ \"firstName\": \"Frank\", \"lastName\": \"Peretti\", \"genre\": \"christian fiction\"}]";
+
+        JSONArray jsonArray = JSONArray.fromObject(jsonStr);
+
+        Map<String, Object> map = new HashedMap();
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject json = jsonArray.getJSONObject(i);
+            System.out.println(json);
+            System.out.println(json.get("firstName"));
+            System.out.println(json.get("lastName"));
+
+            map.put((String) json.get("firstName"), json.get("lastName"));
+        }
+
+        System.out.println("Map:-->>" + map);
+
+
+
 
     }
 
