@@ -10,7 +10,7 @@ import java.util.concurrent.*;
  */
 public class ThreadTest {
     @Test
-    public void testCacheThreadPool(){
+    public void testCacheThreadPool() {
 
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
@@ -31,30 +31,48 @@ public class ThreadTest {
         }
     }
 
-    class myRunnable implements Runnable{
+    private int x = 1;
+    class myRunnable implements Runnable {
 
         private boolean stop;
+//        private int x = 1;
 
         @Override
         public void run() {
+            System.out.println(Thread.currentThread().getName() + "--->>> START" + x);
+            System.out.println(x);
             if (!stop) {
-                System.out.println("runnable once...");
+//                System.out.println("runnable once...:--->>>" + stop);
             }
+            x += 1;
+            System.out.println(Thread.currentThread().getName() + "--->>> END" + x);
         }
 
-        public void setStop(){
+        public void setStop() {
             this.stop = true;
+        }
+    }
+
+    @Test
+    public void testRunnable2() {
+        for (int i = 0; i < 1000; i++) {
+            System.out.println(Thread.currentThread().getName() + "--->>>" + i);
+
+            Thread thread = new Thread(new myRunnable());
+
+            thread.start();
+
         }
     }
 
     @Test
     public void testRunnable() throws InterruptedException {
 
-        for (int i = 0; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
 
             System.out.println(Thread.currentThread().getName() + "--" + i);
 
-            if (i == 3){
+            if (i == 3) {
                 /** 调用线程对象引用的start()方法，使得该线程进入到就绪状态，此时此线程并不一定会马上得以执行，这取决于CPU调度时机 一个线程不能调用2次start方法*/
                 Thread thread1 = new Thread(new myRunnable());
                 thread1.start();
@@ -62,7 +80,7 @@ public class ThreadTest {
                 thread1.join();
                 Thread.currentThread().getName();
             }
-            if (i == 5){
+            if (i == 5) {
                 Thread.currentThread().getName();
                 Thread.sleep(10);
                 Thread thread2 = new Thread(new myRunnable());
@@ -78,14 +96,16 @@ public class ThreadTest {
     /**
      * FutureTask 实现又返回值的线程
      */
-    class myCallable implements Callable<Integer>{
+    class myCallable implements Callable<Integer> {
         private int i = 0;
 
-        /** 带返回值的 */
+        /**
+         * 带返回值的
+         */
         @Override
         public Integer call() throws Exception {
             int sum = 0;
-            for (;i < 10 ; i++){
+            for (; i < 10; i++) {
                 System.out.println(Thread.currentThread().getName() + " --- " + i);
                 sum += i;
             }
@@ -99,15 +119,15 @@ public class ThreadTest {
         Callable<Integer> callable = new myCallable();
         FutureTask<Integer> ft = new FutureTask<Integer>(callable);
 
-        for (int i = 0; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
             System.out.println(Thread.currentThread().getName() + "--" + i);
 
-            if (i == 3){
+            if (i == 3) {
                 /** 调用线程对象引用的start()方法，使得该线程进入到就绪状态，此时此线程并不一定会马上得以执行，这取决于CPU调度时机 */
                 Thread thread1 = new Thread(ft);
                 thread1.start();
             }
-            if (i == 5){
+            if (i == 5) {
                 Thread.currentThread().getName();
                 Thread thread2 = new Thread(ft);
                 thread2.start();
